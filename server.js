@@ -9,7 +9,6 @@ const contactController = require("./controllers/contactController");
 const userRoute = require("./routes/contactsRoute");
 //Import DATABASE
 const mongoose = require("mongoose");
-
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
 //Connect to DATABASE:
@@ -25,6 +24,8 @@ mongoose.connect(
         console.log("Connected To DB");
     },
 );
+//MiddleWares
+app.use(express.json());
 //Route MiddleWares
 app.use("/api/contacts", contactsRoute);
 

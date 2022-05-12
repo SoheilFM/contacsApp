@@ -3,22 +3,19 @@ const mongoose = require("mongoose");
 const contactsSchema = new mongoose.Schema({
     firstName: {
         type: String,
-        required: "A New Contact Must Have a First Name.",
-        ture,
+        required: [true, "A New Contact Must Have a First Name."],
         min: 4,
         max: 10,
     },
     lastName: {
         type: String,
-        required: "A New Contact Must Have a Last Name.",
-        ture,
+        required: [true, "A New Contact Must Have a Last Name."],
         min: 4,
         max: 10,
     },
     mobile: {
         type: String,
-        required: "A New Contact Must Have a Number.",
-        ture,
+        required: [true, "A New Contact Must Have a Number."],
         min: 10,
         max: 14,
     },

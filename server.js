@@ -1,28 +1,29 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
-dotenv.config();
+dotenv.config({ path: __dirname + "/dot.env" });
+require("./dot.env");
 const bodyparser = require("body-parser");
 //Import ContactController
 const contactController = require("./controllers/contactController");
 //Import Route
-const userRoute = require("./routes/contactsRoute");
+const contactsRoute = require("./routes/contactsRoute");
 //Import DATABASE
 const mongoose = require("mongoose");
-app.use(bodyparser.urlencoded({extended: true}));
+app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 //Connect to DATABASE:
 mongoose.connect(
-    process.env.DB_CONNECT,
-    {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true,
-    },
-    () => {
-        console.log("Connected To DB");
-    },
+  process.env.DB_CONNECT,
+  {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  },
+  () => {
+    console.log("Connected To DB");
+  }
 );
 //MiddleWares
 app.use(express.json());
@@ -30,5 +31,5 @@ app.use(express.json());
 app.use("/api/contacts", contactsRoute);
 
 app.listen(process.env.PORT, () => {
-    console.log("The Server is up And Running on port 3000");
+  console.log("The Server is up And Running on port 3000");
 });

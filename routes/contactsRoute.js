@@ -3,6 +3,7 @@ const app = express();
 const router = express.Router();
 const contactsModel = require("../model/contactsModel");
 const contactsController = "./../controllers/contactsController";
+//Get ALL CONTACTS
 router.get("/", async (req, res) => {
   try {
     const contacts = await contactsModel.find();
@@ -11,14 +12,7 @@ router.get("/", async (req, res) => {
     res.status(400).send(error.details[0].message);
   }
 });
-//.get(contactsController.getAllContacts)
-//router.route("/create").post(contactsController.createContact);
-// router
-//   .route("/:id")
-//   .get(contactsController.getContact)
-//   .patch(contactsController.updateContact)
-//   .delete(contactsController.deteleContact);
-//Create NEw CONTACT
+//Create Contacts
 router.post("/create", async (req, res) => {
   try {
     const contactExist = await contactsModel.findOne({
@@ -41,5 +35,18 @@ router.post("/create", async (req, res) => {
 });
 
 //Specefic Contact
-
+router.get("/findcontact", async (req, res) => {
+  try {
+    //building Query
+    const queryObj = { ...req.query };
+    const excludeFields = ["page", "sort", "limit", "fields"];
+    excludeFields.forEach((el) => delete queryObj[el]);
+    const query = contactsModel.find(queryObj);
+    const contact = await query;
+    if (!contact) return res.send("USER NOT FOUND!");
+    res.json(contact);
+  } catch (err) {
+    res.status(400).send(error.details[0].message);
+  }
+});
 module.exports = router;

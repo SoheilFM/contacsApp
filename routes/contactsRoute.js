@@ -46,7 +46,7 @@ router.get("/findcontact", async (req, res) => {
     if (!contact) return res.send("USER NOT FOUND!");
     res.json(contact);
   } catch (err) {
-    res.status(400).send(error.details[0].message);
+    res.status(400).send(err);
   }
 });
 
@@ -66,7 +66,7 @@ router.patch("/updateContact/:contactid", async (req, res) => {
     );
     res.json(updatecontact);
   } catch (err) {
-    res.status(400);
+    res.status(400).send(err);
   }
 });
 
@@ -78,7 +78,7 @@ router.delete("/deleteContact/:contactid", async (req, res) => {
     });
     res.json(removedContact);
   } catch (err) {
-    res.status(400);
+    res.status(400).send(err);
   }
 });
 

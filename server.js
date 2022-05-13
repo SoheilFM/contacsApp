@@ -3,15 +3,13 @@ const app = express();
 const dotenv = require("dotenv");
 dotenv.config({ path: __dirname + "/dot.env" });
 require("./dot.env");
-const bodyparser = require("body-parser");
-//Import ContactController
-const contactController = require("./controllers/contactController");
+const bodyParser = require("body-parser");
 //Import Route
 const contactsRoute = require("./routes/contactsRoute");
 //Import DATABASE
 const mongoose = require("mongoose");
-app.use(bodyparser.urlencoded({ extended: true }));
-app.use(bodyparser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 //Connect to DATABASE:
 mongoose.connect(
   process.env.DB_CONNECT,
@@ -27,6 +25,15 @@ mongoose.connect(
 );
 //MiddleWares
 app.use(express.json());
+app.use(express.static(__dirname + "/public"));
+app.use((req, res, next) => {
+  console.log("Hello From The Middleware ");
+  next();
+});
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
 //Route MiddleWares
 app.use("/api/contacts", contactsRoute);
 

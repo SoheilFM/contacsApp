@@ -3,7 +3,14 @@ const app = express();
 const router = express.Router();
 const contactsModel = require("../model/contactsModel");
 const contactsController = "./../controllers/contactsController";
-
+router.get("/", async (req, res) => {
+  try {
+    const contacts = await contactsModel.find();
+    res.json(contacts);
+  } catch (err) {
+    res.status(400).send(error.details[0].message);
+  }
+});
 //.get(contactsController.getAllContacts)
 //router.route("/create").post(contactsController.createContact);
 // router
@@ -25,12 +32,14 @@ router.post("/create", async (req, res) => {
       email: req.body.email,
     });
     const savedContacts = await contacts.save();
-    res.send(savedContacts);
+    res.status(201).send(savedContacts);
     //console.log(req.body);
     //console.log(savedContacts);
   } catch (err) {
     res.status(400).send(error.details[0].message);
   }
 });
+
+//Specefic Contact
 
 module.exports = router;

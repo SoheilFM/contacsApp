@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const contactsRoute = require("./routes/contactsRoute");
 //Import DATABASE
 const mongoose = require("mongoose");
+//add BodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 //Connect to DATABASE:
@@ -26,10 +27,6 @@ mongoose.connect(
 //MiddleWares
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
-app.use((req, res, next) => {
-  console.log("Hello From The Middleware ");
-  next();
-});
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();

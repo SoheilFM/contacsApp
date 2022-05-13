@@ -70,4 +70,16 @@ router.patch("/updateContact/:contactid", async (req, res) => {
   }
 });
 
+//Remove A Contact
+router.delete("/deleteContact/:contactid", async (req, res) => {
+  try {
+    const removedContact = await contactsModel.remove({
+      mobile: req.params.contactid,
+    });
+    res.json(removedContact);
+  } catch (err) {
+    res.status(400);
+  }
+});
+
 module.exports = router;

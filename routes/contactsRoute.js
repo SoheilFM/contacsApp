@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
     const contacts = await contactsModel.find();
     res.json(contacts);
   } catch (err) {
-    res.status(400).send(error.details[0].message);
+    res.status(400).send(err);
   }
 });
 //Create Contacts
@@ -30,7 +30,7 @@ router.post("/create", async (req, res) => {
     //console.log(req.body);
     //console.log(savedContacts);
   } catch (err) {
-    res.status(400).send(error.details[0].message);
+    res.status(400).send(err);
   }
 });
 

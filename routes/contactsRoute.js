@@ -49,4 +49,25 @@ router.get("/findcontact", async (req, res) => {
     res.status(400).send(error.details[0].message);
   }
 });
+
+//update Contact
+router.patch("/updateContact/:contactid", async (req, res) => {
+  try {
+    const updatecontact = await contactsModel.updateOne(
+      { mobile: req.params.contactid },
+      {
+        $set: {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          mobile: req.body.mobile,
+          email: req.body.email,
+        },
+      }
+    );
+    res.json(updatecontact);
+  } catch (err) {
+    res.status(400);
+  }
+});
+
 module.exports = router;

@@ -1,6 +1,6 @@
 const http = require("http");
 const express = require("express");
-const app = express();
+const app = require("./app");
 const dotenv = require("dotenv");
 dotenv.config({ path: __dirname + "/dot.env" });
 require("./dot.env");

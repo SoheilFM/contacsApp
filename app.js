@@ -23,4 +23,18 @@ app.use(bodyParser.json());
 
 //Route MiddleWares
 app.use("/api/contacts", contactsRoute);
+//ERROR HANDELING
+app.use((req, res, next) => {
+  const error = new Error("NOT FOUNDED");
+  error.status = 404;
+  next(error);
+});
+app.use((req, res, next) => {
+  res.status(err.status || 500);
+  res.json({
+    error: {
+      message: error.message,
+    },
+  });
+});
 module.exports = app;

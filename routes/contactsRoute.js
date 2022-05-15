@@ -7,7 +7,7 @@ const contactsController = "./../controllers/contactsController";
 router.get("/", async (req, res) => {
   try {
     const contacts = await contactsModel.find();
-    res.json(contacts);
+    res.status(200).json(contacts);
   } catch (err) {
     res.status(400).send(err);
   }
@@ -26,7 +26,10 @@ router.post("/create", async (req, res) => {
       email: req.body.email,
     });
     const savedContacts = await contacts.save();
-    res.status(201).send(savedContacts);
+    res.status(201).json({
+      message: "YOU CREATE NEW CONTACT ",
+      savedContacts,
+    });
     //console.log(req.body);
     //console.log(savedContacts);
   } catch (err) {
@@ -43,8 +46,8 @@ router.get("/findcontact", async (req, res) => {
     excludeFields.forEach((el) => delete queryObj[el]);
     const query = contactsModel.find(queryObj);
     const contact = await query;
-    if (!contact) return res.send("USER NOT FOUND!");
-    res.json(contact);
+    if (!contact) return res.status(404).send("USER NOT FOUND!");
+    res.status(200).json(contact);
   } catch (err) {
     res.status(400).send(err);
   }
@@ -64,7 +67,10 @@ router.patch("/updateContact/:contactid", async (req, res) => {
         },
       }
     );
-    res.json(updatecontact);
+    res.status(200).json({
+      message: "Updated Contact Info",
+      updatecontact,
+    });
   } catch (err) {
     res.status(400).send(err);
   }
@@ -76,7 +82,10 @@ router.delete("/deleteContact/:contactid", async (req, res) => {
     const removedContact = await contactsModel.remove({
       mobile: req.params.contactid,
     });
-    res.json(removedContact);
+    res.json({
+      message: "Removed Contact",
+      removedContact,
+    });
   } catch (err) {
     res.status(400).send(err);
   }
